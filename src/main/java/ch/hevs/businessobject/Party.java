@@ -20,7 +20,7 @@ public class Party {
 	private String partyName;
 	private String partyInitials;
 
-	@OneToMany(mappedBy = "party", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "party")
 	private Set<Politician> members;
 	@Embedded
 	private Address partyAddress;

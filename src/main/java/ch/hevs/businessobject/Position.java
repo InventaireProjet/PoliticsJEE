@@ -3,6 +3,7 @@ package ch.hevs.businessobject;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,10 @@ public class Position {
 	private Address positionAddress;
 
 	@ManyToMany
-	private Set<Person> appointees;
+	private Set<Politician> politicians;
+	
+	@ManyToMany (cascade = CascadeType.ALL)
+	private Set<CivilServant> appointees;
 
 	//Getters and setters
 	public Long getId() {
@@ -51,16 +55,26 @@ public class Position {
 		this.positionAddress = positionAddress;
 	}
 
-	public Set<Person> getAppointees() {
+	public Set<Politician> getPoliticians() {
+		return politicians;
+	}
+
+	public void setPoliticians(Set<Politician> politicians) {
+		this.politicians = politicians;
+	}
+
+	public Set<CivilServant> getAppointees() {
 		return appointees;
 	}
 
-	public void setAppointees(Set<Person> appointees) {
+	public void setAppointees(Set<CivilServant> appointees) {
 		this.appointees = appointees;
 	}
 
 
 	//Constructors
+
+	
 
 	public Position() {
 	}
@@ -69,6 +83,7 @@ public class Position {
 
 		this.positionName = positionName;
 		this.positionAddress = positionAddress;
-		this.appointees = new HashSet<Person>();
+		this.appointees = new HashSet<CivilServant>();
+		this.politicians = new HashSet<Politician>();
 	}
 }
