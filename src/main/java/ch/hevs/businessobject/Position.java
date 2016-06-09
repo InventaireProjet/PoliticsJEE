@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "`Position`")
+@Table(name = "`POSITION`")
 public class Position {
 
 	@Id
