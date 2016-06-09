@@ -11,9 +11,11 @@ import ch.hevs.businessobject.Position;
 public interface Politics {
 	
 	public List<Politician> getPoliticians();
+	public Politician getPoliticianFromLastname(String politicianLastname);
 	public List<Party> getParties();
 	public List<Position> getPositions();
 	public List<CivilServant> getCivilServants();
+	public CivilServant getCivilServantFromLastname(String civilServantLastname);
 	public Party getPartyFromPoliticianLastname(String politicianLastname);
 	public Party getPartyFromInitials(String initials);
 	public List<Position> getPositionFromPoliticianLastname(String politicianLastname);

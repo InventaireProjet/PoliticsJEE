@@ -20,17 +20,17 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public List<Politician> getPoliticians() {
-		return em.createQuery("FROM Politician").getResultList();
+		return (List<Politician>) em.createQuery("FROM Politician").getResultList();
 	}
 
 	@Override
 	public List<Party> getParties() {
-		return em.createQuery("FROM Party").getResultList();
+		return (List<Party>) em.createQuery("FROM Party").getResultList();
 	}
 
 	@Override
 	public List<CivilServant> getCivilServants() {
-		return em.createQuery("FROM CivilServant").getResultList();
+		return (List<CivilServant>) em.createQuery("FROM CivilServant").getResultList();
 	}
 
 	@Override
@@ -85,6 +85,18 @@ public class PoliticsBean implements Politics {
 		Query query = em.createQuery("SELECT pos FROM Position pos WHERE pos.positionName = :positionName");
 		query.setParameter("positionName", positionName);
 		return (Position) query.getSingleResult();
+	}
+
+	@Override
+	public Politician getPoliticianFromLastname(String politicianLastname) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CivilServant getCivilServantFromLastname(String civilServantLastname) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
