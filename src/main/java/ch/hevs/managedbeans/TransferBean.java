@@ -9,8 +9,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import ch.hevs.bankservice.Bank;
-import ch.hevs.businessobject.Account;
-import ch.hevs.businessobject.Client;
+import ch.hevs.businessobject.CivilServant;
+import ch.hevs.businessobject.Party;
+import ch.hevs.businessobject.Politician;
+import ch.hevs.businessobject.Position;
 
 /**
  * TransferBean.java
@@ -19,147 +21,301 @@ import ch.hevs.businessobject.Client;
 
 public class TransferBean
 {
-    private List<Client> clients;
-    private List<String> clientNames;
-    private List<String> sourceAccountDescriptions;
-    private List<String> destinationAccountDescriptions;
-    private String sourceAccountDescription;
-    private String destinationAccountDescription;
-    private String sourceClientName;
-    private String destinationClientName;
-    private String transactionResult;
-    private int transactionAmount;
-    private Bank bank;
-    
-    @PostConstruct
-    public void initialize() throws NamingException {
-    	
-    	// use JNDI to inject reference to bank EJB
-    	InitialContext ctx = new InitialContext();
-		bank = (Bank) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/BankBean!ch.hevs.bankservice.Bank");    	
-			
-    	// get clients
-		List<Client> clientList = bank.getClients();
-		this.clientNames = new ArrayList<String>();
-		for (Client client : clientList) {
-			this.clientNames.add(client.getLastname());
+	private List<Politician> politicians;
+	private List<String> politicianNames;
+	private List<CivilServant> civilServants;
+	private List<String> civilServantNames;
+	private List<String> partiesInitials;
+	private List<String> politicianSourcePositionNames;
+	private List<String> civilServantSourcePositionNames;
+	private List<String> destinationPositionNames; 
+	private String sourcePartyInitials;
+	private String destinationPartyInitials;
+	//private String politicianSourcePositionName;
+	private String politicianDestinationPositionName;
+	//	private String civilServantSourcePositionName;
+	private String civilServantDestinationPositionName;
+	private String politicianName;
+	private String civilServantName;
+	private String transactionResult;
+	private Bank bank;
+
+	@PostConstruct
+	public void initialize() throws NamingException {
+
+		// use JNDI to inject reference to EJB
+
+		//TODO Changer références
+		InitialContext ctx = new InitialContext();
+		bank = (Bank) ctx.lookup("java:global/PoliticsJEE-0.0.1-SNAPSHOT/BankBean!ch.hevs.bankservice.Bank");    	
+
+		// get politicians
+		List<Politician> politicianList = bank.getPoliticians();
+		this.politicianNames = new ArrayList<String>();
+		for (Politician politician : politicianList) {
+			this.politicianNames.add(politician.getLastname());
 		}
-		
-		// initialize account descriptions
-		this.sourceAccountDescriptions = new ArrayList<String>();
-		this.destinationAccountDescriptions = new ArrayList<String>();
-		List<Account> accounts = bank.getAccountListFromClientLastname(clientList.get(0).getLastname());
-		this.sourceAccountDescriptions.add(accounts.get(0).getDescription());
-		this.destinationAccountDescriptions.add(accounts.get(0).getDescription());
-    }
-    
-    // transactionAmount
-    public int getTransactionAmount () {
-    	return transactionAmount;
-    }
-    public void setTransactionAmount (final int transactionAmount) {
-    	this.transactionAmount=transactionAmount;
-    }
-    
-    // sourceClientName
-    public String getSourceClientName () {
-    	return sourceClientName;
-    }
-    public void setSourceClientName (final String sourceClientName) {
-    	this.sourceClientName=sourceClientName;
-    }
-    
-    // sourceAccountDescriptions
-    public List<String> getSourceAccountDescriptions () {
-    	return sourceAccountDescriptions;
-    }
-    
-    // destinationAccountDescriptions
-    public List<String> getDestinationAccountDescriptions () {
-    	return destinationAccountDescriptions;
-    }
-    
-    // destinationClientName
-    public String getDestinationClientName () {
-    	return destinationClientName;
-    }
-    public void setDestinationClientName (final String destinationClientName) {
-    	this.destinationClientName=destinationClientName;
-    }
-    
-    // transactionResult
-    public String getTransactionResult () {
-    	return transactionResult;
-    }
+
+		// get civil servants
+		List<CivilServant> civilServantList = bank.getCivilServants();
+		this.civilServantNames = new ArrayList<String>();
+		for (CivilServant civilServant : civilServantList) {
+			this.civilServantNames.add(civilServant.getLastname());
+		}
+
+		// initialize party initials
+		this.partiesInitials = new ArrayList<String>();
+		Party party = bank.getPartyFromPoliticianLastname(politicianList.get(0).getLastname());
+		this.partiesInitials.add(party.getPartyInitials());
+
+		// initialize position name of politicians
+		this.politicianSourcePositionNames= new ArrayList<String>();
+		List<Position> positionsPoliticians = bank.getPositionFromPoliticianLastname(politicianList.get(0).getLastname());
+		this.politicianSourcePositionNames.add(positionsPoliticians.get(0).getPositionName());
+
+
+		// initialize position name of civil servants
+		this.civilServantSourcePositionNames= new ArrayList<String>();
+		List<Position> positionsCivilServants = bank.getPositionFromCivilServantLastname(civilServantList.get(0).getLastname());
+		this.civilServantSourcePositionNames.add(positionsCivilServants.get(0).getPositionName());
+
+		//initialize destination position names
+		this.destinationPositionNames = new ArrayList<String>();
+		List<Position> positionList = bank.getPositionNames());
+		for (Position position : positionList) {
+			this.destinationPositionNames.add(position.getPositionName());
+		}
+	}
+
+
+
+	//	Politicians
+	public List<Politician> getPoliticians() {
+		return politicians;
+	}
+
+
+	//	PoliticianNames
+	public List<String> getPoliticianNames() {
+		return politicianNames;
+	}
+
+
+	//	CivilServants
+	public List<CivilServant> getCivilServants() {
+		return civilServants;
+	}
+
+	//	CivilServantNames
+	public List<String> getCivilServantNames() {
+		return civilServantNames;
+	}
+
+	//	PartiesInitials
+	public List<String> getPartiesInitials() {
+		return partiesInitials;
+	}
+
+	//	politicianSourcePositionNames
+	public List<String> getPoliticianSourcePositionNames() {
+		return politicianSourcePositionNames;
+	}
+
+	//	civilServantSourcePositionNames
+	public List<String> getCivilServantSourcePositionNames() {
+		return civilServantSourcePositionNames;
+	}
+
+	// DestinationPositionNames
+	public List<String> getDestinationPositionNames() {
+		return destinationPositionNames;
+	}
+
+
+
+	// sourcePartyInitials
+	public String getSourcePartInitials() {
+		return sourcePartyInitials;
+	}
+	public void setSourcePartyInitials(String sourcePartyInitials) {
+		this.sourcePartyInitials = sourcePartyInitials;
+	}
+
+	// destinationPartyInitials
+	public String getDestinationPartyInitials() {
+		return destinationPartyInitials;
+	}
+	public void setDestinationPartyInitials(
+			String destinationPartyInitials) {
+		this.destinationPartyInitials = destinationPartyInitials;
+	}
+
+	/*	//	PoliticianSourcePositionName
+	public String getPoliticianSourcePositionName() {
+		return politicianSourcePositionName;
+	}
+
+	public void setPoliticianSourcePositionName(String politicianSourcePositionName) {
+		this.politicianSourcePositionName = politicianSourcePositionName;
+	}
+	 **/
+
+	//	PoliticianDestinationPositionName
+	public String getPoliticianDestinationPositionName() {
+		return politicianDestinationPositionName;
+	}
+
+	public void setPoliticianDestinationPositionName(String politicianDestinationPositionName) {
+		this.politicianDestinationPositionName = politicianDestinationPositionName;
+	}
+
+	/*
+	//	CivilServantSourcePositionName
+	public String getCivilServantSourcePositionName() {
+		return civilServantSourcePositionName;
+	}
+
+	public void setCivilServantSourcePositionName(String civilServantSourcePositionName) {
+		this.civilServantSourcePositionName = civilServantSourcePositionName;
+	}
+
+	 */
+	//	CivilServantDestinationPositionName
+	public String getCivilServantDestinationPositionName() {
+		return civilServantDestinationPositionName;
+	}
+
+	public void setCivilServantDestinationPositionName(String civilServantDestinationPositionName) {
+		this.civilServantDestinationPositionName = civilServantDestinationPositionName;
+	}
+
+
+	//	PoliticianName
+	public String getPoliticianName() {
+		return politicianName;
+	}
+
+	public void setPoliticianName(String politicianName) {
+		this.politicianName = politicianName;
+	}
+
+
+
+	// CivilServantName
+	public String getCivilServantName() {
+		return civilServantName;
+	}
+
+	public void setCivilServantName(String civilServantName) {
+		this.civilServantName = civilServantName;
+	}
+
+
+	// transactionResult
+	public String getTransactionResult () {
+		return transactionResult;
+	}
 	public void setTransactionResult(String transactionResult) {
 		this.transactionResult = transactionResult;
 	}
-    
-	// sourceAccountDescription
-    public String getSourceAccountDescription() {
-		return sourceAccountDescription;
-	}
-	public void setSourceAccountDescription(String sourceAccountDescription) {
-		this.sourceAccountDescription = sourceAccountDescription;
-	}
 
-	// destinationAccountDescription
-	public String getDestinationAccountDescription() {
-		return destinationAccountDescription;
-	}
-	public void setDestinationAccountDescription(
-			String destinationAccountDescription) {
-		this.destinationAccountDescription = destinationAccountDescription;
-	}
 
-	public void updateSourceAccounts(ValueChangeEvent event) {
-    	this.sourceClientName = (String)event.getNewValue();
-    	
-	    List<Account> accounts = bank.getAccountListFromClientLastname(this.sourceClientName);
-	    this.sourceAccountDescriptions = new ArrayList<String>();
-		for (Account account : accounts) {
-			this.sourceAccountDescriptions.add(account.getDescription());
+	public void updateParty(ValueChangeEvent event) {
+		this.politicianName = (String)event.getNewValue();
+
+		Party party = bank.getPartyFromPoliticianLastname(this.politicianName);
+		this.sourcePartyInitials = new String();
+		sourcePartyInitials=party.getPartyInitials();
+
+	}
+	public void updatePositionsPolitician(ValueChangeEvent event) {
+		this.politicianName = (String)event.getNewValue();
+
+		List<Position> positions = bank.getPositionFromPoliticianLastname(politicianName);
+		this.politicianSourcePositionNames = new ArrayList<String>();
+		for (Position position : positions) {
+			this.politicianSourcePositionNames.add(position.getPositionName());
 		}
-    }
-	public void updateDestinationAccounts(ValueChangeEvent event) {
-    	this.destinationClientName = (String)event.getNewValue();
-			
-	    List<Account> accounts = bank.getAccountListFromClientLastname(this.destinationClientName);
-	    this.destinationAccountDescriptions = new ArrayList<String>();
-		for (Account account : accounts) {
-			this.destinationAccountDescriptions.add(account.getDescription());
-		}
-    }
+	}
 
-    public List<Client> getClients() {
-		return clients;
-    }
-    
-    public List<String> getClientNames() {
-    	return clientNames;
-    }
-    
-    
-    public String performTransfer() {
-    	
-    	try {
-			if (sourceClientName.equals(destinationClientName) && sourceAccountDescription.equals(destinationAccountDescription)) {
-				
-				this.transactionResult="Error: accounts are identical!";
+	public void updatePositionsCivilServant(ValueChangeEvent event) {
+
+		this.civilServantName = (String)event.getNewValue();
+
+		List<Position> positions = bank.getPositionFromCivilServantLastname(civilServantName);
+		this.civilServantSourcePositionNames = new ArrayList<String>();
+		for (Position position : positions) {
+			this.civilServantSourcePositionNames.add(position.getPositionName());
+		}
+	}
+
+
+	public String performPartyChange() {
+
+		try {
+			if (partiesInitials.equals(destinationPartyInitials))  {
+
+				this.transactionResult="Error: parties are identical!";
 			} 
 			else {
-				
-				Account compteSrc = bank.getAccount(sourceAccountDescription, sourceClientName);
-				Account compteDest = bank.getAccount(destinationAccountDescription, destinationClientName);
-	
+
+				Party partySrc = bank.getPartyFromInitials(sourcePartyInitials);
+				Party partyDest = bank.getParty(destinationPartyInitials);
+
 				// Transfer
-				bank.transfer(compteSrc, compteDest, transactionAmount);
+				bank.changeParty (partySrc, partyDest);
 				this.transactionResult="Success!";
 			}
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
 	} 
+	
+	public String performPostionAddingPolitician() {
+
+		try {
+			for(String position:politicianSourcePositionNames)
+			if (position.equals(politicianDestinationPositionName))  {
+
+				this.transactionResult="Error: position already exists!";
+			} 
+			else {
+
+				Position newPosition = bank.getPositionFromName(politicianDestinationPositionName);
+
+				// Transfer
+				bank.addPosition (newPosition);
+				this.transactionResult="Success!";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+	}
+	
+	public String performPostionAddingCivilServant() {
+
+		try {
+			for(String position:civilServantSourcePositionNames)
+			if (position.equals(politicianDestinationPositionName))  {
+
+				this.transactionResult="Error: position already exists!";
+			} 
+			else {
+
+				Position newPosition = bank.getPositionFromName(civilServantDestinationPositionName);
+
+				// Transfer
+				bank.addPosition (newPosition);
+				this.transactionResult="Success!";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+	}
 }
