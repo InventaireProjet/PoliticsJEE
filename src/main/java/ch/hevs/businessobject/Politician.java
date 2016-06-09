@@ -46,4 +46,8 @@ public class Politician extends Person {
 		this.positions=new HashSet<Position>();
 
 	}
+	
+	public void addPosition(Position pos) {
+		this.positions.add(pos);
+	}
 }

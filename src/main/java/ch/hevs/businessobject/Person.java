@@ -1,5 +1,7 @@
 package ch.hevs.businessobject;
 
+import java.util.Set;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,4 +60,6 @@ public class Person {
 		this.lastname = lastname;
 		this.firstname = firstname;
 	}
+	
+	public void addPosition(Position pos) {	};
 }

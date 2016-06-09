@@ -76,8 +76,8 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public void addPosition(Person person, Position position) {
-		// TODO Auto-generated method stub
-		
+		person.addPosition(position);
+		person = em.merge(person);
 	}
 
 	@Override
@@ -89,14 +89,16 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public Politician getPoliticianFromLastname(String politicianLastname) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("SELECT pol FROM Politician pol WHERE pol.lastname = :politicianLastname");
+		query.setParameter("politicianLastname", politicianLastname);
+		return (Politician) query.getSingleResult();
 	}
 
 	@Override
 	public CivilServant getCivilServantFromLastname(String civilServantLastname) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("SELECT civ FROM CivilServant civ WHERE civ.lastname = :civilServantLastname");
+		query.setParameter("civilServantLastname", civilServantLastname);
+		return (CivilServant) query.getSingleResult();
 	}
 
 }

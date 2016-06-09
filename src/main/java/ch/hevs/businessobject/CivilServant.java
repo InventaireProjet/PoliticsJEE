@@ -32,4 +32,8 @@ public class CivilServant extends Person {
 		super(lastname, firstname);
 		this.positions=new HashSet<Position>();
 	}
+	
+	public void addPosition(Position pos) {
+		this.positions.add(pos);
+	}
 }
