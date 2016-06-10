@@ -8,11 +8,12 @@ import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import ch.hevs.bankservice.Bank;
+
 import ch.hevs.businessobject.CivilServant;
 import ch.hevs.businessobject.Party;
 import ch.hevs.businessobject.Politician;
 import ch.hevs.businessobject.Position;
+import ch.hevs.politicsservice.Politics;
 
 /**
  * TransferBean.java
@@ -38,7 +39,7 @@ public class TransferBean
 	private String politicianName;
 	private String civilServantName;
 	private String transactionResult;
-	private Bank bank;
+	private Politics politics;
 
 	@PostConstruct
 	public void initialize() throws NamingException {
@@ -47,17 +48,17 @@ public class TransferBean
 
 		//TODO Changer références
 		InitialContext ctx = new InitialContext();
-		bank = (Bank) ctx.lookup("java:global/PoliticsJEE-0.0.1-SNAPSHOT/BankBean!ch.hevs.bankservice.Bank");    	
+		politics = (Politics) ctx.lookup("java:global/PoliticsJEE-0.0.1-SNAPSHOT/BankBean!ch.hevs.bankservice.Bank");    	
 
 		// get politicians
-		List<Politician> politicianList = bank.getPoliticians();
+		List<Politician> politicianList = politics.getPoliticians();
 		this.politicianNames = new ArrayList<String>();
 		for (Politician politician : politicianList) {
 			this.politicianNames.add(politician.getLastname());
 		}
 
 		// get civil servants
-		List<CivilServant> civilServantList = bank.getCivilServants();
+		List<CivilServant> civilServantList = politics.getCivilServants();
 		this.civilServantNames = new ArrayList<String>();
 		for (CivilServant civilServant : civilServantList) {
 			this.civilServantNames.add(civilServant.getLastname());
@@ -65,23 +66,23 @@ public class TransferBean
 
 		// initialize party initials
 		this.partiesInitials = new ArrayList<String>();
-		Party party = bank.getPartyFromPoliticianLastname(politicianList.get(0).getLastname());
+		Party party = politics.getPartyFromPoliticianLastname(politicianList.get(0).getLastname());
 		this.partiesInitials.add(party.getPartyInitials());
 
 		// initialize position name of politicians
 		this.politicianSourcePositionNames= new ArrayList<String>();
-		List<Position> positionsPoliticians = bank.getPositionFromPoliticianLastname(politicianList.get(0).getLastname());
+		List<Position> positionsPoliticians = politics.getPositionFromPoliticianLastname(politicianList.get(0).getLastname());
 		this.politicianSourcePositionNames.add(positionsPoliticians.get(0).getPositionName());
 
 
 		// initialize position name of civil servants
 		this.civilServantSourcePositionNames= new ArrayList<String>();
-		List<Position> positionsCivilServants = bank.getPositionFromCivilServantLastname(civilServantList.get(0).getLastname());
+		List<Position> positionsCivilServants = politics.getPositionFromCivilServantLastname(civilServantList.get(0).getLastname());
 		this.civilServantSourcePositionNames.add(positionsCivilServants.get(0).getPositionName());
 
 		//initialize destination position names
 		this.destinationPositionNames = new ArrayList<String>();
-		List<Position> positionList = bank.getPositionNames());
+		List<Position> positionList = politics.getPositions();
 		for (Position position : positionList) {
 			this.destinationPositionNames.add(position.getPositionName());
 		}
@@ -223,7 +224,7 @@ public class TransferBean
 	public void updateParty(ValueChangeEvent event) {
 		this.politicianName = (String)event.getNewValue();
 
-		Party party = bank.getPartyFromPoliticianLastname(this.politicianName);
+		Party party = politics.getPartyFromPoliticianLastname(this.politicianName);
 		this.sourcePartyInitials = new String();
 		sourcePartyInitials=party.getPartyInitials();
 
@@ -231,7 +232,7 @@ public class TransferBean
 	public void updatePositionsPolitician(ValueChangeEvent event) {
 		this.politicianName = (String)event.getNewValue();
 
-		List<Position> positions = bank.getPositionFromPoliticianLastname(politicianName);
+		List<Position> positions = politics.getPositionFromPoliticianLastname(politicianName);
 		this.politicianSourcePositionNames = new ArrayList<String>();
 		for (Position position : positions) {
 			this.politicianSourcePositionNames.add(position.getPositionName());
@@ -242,7 +243,7 @@ public class TransferBean
 
 		this.civilServantName = (String)event.getNewValue();
 
-		List<Position> positions = bank.getPositionFromCivilServantLastname(civilServantName);
+		List<Position> positions = politics.getPositionFromCivilServantLastname(civilServantName);
 		this.civilServantSourcePositionNames = new ArrayList<String>();
 		for (Position position : positions) {
 			this.civilServantSourcePositionNames.add(position.getPositionName());
@@ -259,11 +260,11 @@ public class TransferBean
 			} 
 			else {
 
-				Party partySrc = bank.getPartyFromInitials(sourcePartyInitials);
-				Party partyDest = bank.getParty(destinationPartyInitials);
+				Politician politician = politics.getPoliticianFromLastname(politicianName);
+				Party partyDest = politics.getPartyFromInitials(destinationPartyInitials);
 
 				// Transfer
-				bank.changeParty (partySrc, partyDest);
+				politics.changeParty (politician, partyDest);
 				this.transactionResult="Success!";
 			}
 		} catch (Exception e) {
@@ -283,10 +284,11 @@ public class TransferBean
 			} 
 			else {
 
-				Position newPosition = bank.getPositionFromName(politicianDestinationPositionName);
+				Politician politician = politics.getPoliticianFromLastname(politicianName);
+				Position newPosition = politics.getPositionFromName(politicianDestinationPositionName);
 
 				// Transfer
-				bank.addPosition (newPosition);
+				politics.addPosition (politician, newPosition);
 				this.transactionResult="Success!";
 			}
 		} catch (Exception e) {
@@ -306,10 +308,11 @@ public class TransferBean
 			} 
 			else {
 
-				Position newPosition = bank.getPositionFromName(civilServantDestinationPositionName);
+				CivilServant civilServant = politics.getCivilServantFromLastname(civilServantName);
+				Position newPosition = politics.getPositionFromName(civilServantDestinationPositionName);
 
 				// Transfer
-				bank.addPosition (newPosition);
+				politics.addPosition (civilServant, newPosition);
 				this.transactionResult="Success!";
 			}
 		} catch (Exception e) {
