@@ -62,7 +62,7 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public Party getPartyFromInitials(String initials) {
-		Query query = em.createQuery("SELECT p FROM Party WHERE p.initials =:initials");
+		Query query = em.createQuery("SELECT p FROM Party p WHERE p.initials =:initials");
 		query.setParameter("initials", initials);
 		return (Party) query.getSingleResult();
 	}
@@ -71,7 +71,6 @@ public class PoliticsBean implements Politics {
 	public void changeParty(Politician politician, Party newParty) {
 		politician.setParty(newParty);
 		politician = em.merge(politician);
-		// TODO Contrôler ça...
 	}
 
 	@Override
