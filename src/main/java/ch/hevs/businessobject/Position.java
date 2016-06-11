@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,10 +27,10 @@ public class Position {
 	@Embedded
 	private Address positionAddress;
 
-	@ManyToMany
+	@ManyToMany (fetch=FetchType.EAGER)
 	private Set<Politician> politicians;
 	
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<CivilServant> appointees;
 
 	//Getters and setters

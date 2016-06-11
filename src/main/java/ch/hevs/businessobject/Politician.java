@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -15,7 +16,7 @@ public class Politician extends Person {
 	@ManyToOne
 	private Party party;
 	
-	@ManyToMany(mappedBy = "appointees")
+	@ManyToMany(mappedBy = "politicians", fetch=FetchType.EAGER)
 	private Set<Position> positions;
 
 	//Getters and setters

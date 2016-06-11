@@ -5,13 +5,14 @@ import java.util.Set;
 
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class CivilServant extends Person {
 
 	
-	@ManyToMany(mappedBy = "appointees")
+	@ManyToMany(mappedBy = "appointees", fetch=FetchType.EAGER)
 	private Set<Position> positions;
 
 	
