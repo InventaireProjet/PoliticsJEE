@@ -7,6 +7,12 @@
 
 	<persistence-unit name="politicsPU">
 		<jta-data-source>java:/labsDS</jta-data-source>
+		<class>ch.hevs.businessobject.Address</class>
+		<class>ch.hevs.businessobject.CivilServant</class>
+		<class>ch.hevs.businessobject.Party</class>
+		<class>ch.hevs.businessobject.Person</class>
+		<class>ch.hevs.businessobject.Politician</class>
+		<class>ch.hevs.businessobject.Position</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" /> 

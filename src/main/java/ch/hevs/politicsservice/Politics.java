@@ -2,12 +2,14 @@ package ch.hevs.politicsservice;
 
 import java.util.List;
 
+import javax.ejb.Local;
+
 import ch.hevs.businessobject.CivilServant;
 import ch.hevs.businessobject.Party;
 import ch.hevs.businessobject.Person;
 import ch.hevs.businessobject.Politician;
 import ch.hevs.businessobject.Position;
-
+@Local
 public interface Politics {
 	
 	public List<Politician> getPoliticians();

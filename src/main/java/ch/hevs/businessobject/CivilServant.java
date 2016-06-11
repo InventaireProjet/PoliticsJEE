@@ -35,5 +35,6 @@ public class CivilServant extends Person {
 	
 	public void addPosition(Position pos) {
 		this.positions.add(pos);
+		pos.addCivilServant(this);
 	}
 }
