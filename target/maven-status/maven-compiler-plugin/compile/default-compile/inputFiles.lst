@@ -1,12 +1,10 @@
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\bankservice\Politics.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\CivilServant.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\Politician.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\exception\BankException.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\bankservice\BankBean.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\bankservice\Bank.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\managedbeans\MembershipBean.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\Address.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\Person.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\Position.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\businessobject\Party.java
-C:\Users\Administrateur\Documents\Eclipseworkspaces\rootJavaEE 2\PoliticsJEE\src\main\java\ch\hevs\managedbeans\TransferBean.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\Party.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\managedbeans\TransferBean.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\Address.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\Person.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\politicsservice\PoliticsBean.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\CivilServant.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\Position.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\politicsservice\Politics.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\exception\BankException.java
+C:\Users\Ingestien\workspace - JEE\rootJavaEE 2\Labs\PoliticsJEE\PoliticsJEE\src\main\java\ch\hevs\businessobject\Politician.java

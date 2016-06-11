@@ -62,7 +62,7 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public Party getPartyFromInitials(String initials) {
-		Query query = em.createQuery("SELECT p FROM Party WHERE p.initials =:initials");
+		Query query = em.createQuery("SELECT p FROM Party p WHERE p.partyInitials =:initials");
 		query.setParameter("initials", initials);
 		return (Party) query.getSingleResult();
 	}

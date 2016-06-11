@@ -1,0 +1,10 @@
+ch\hevs\businessobject\Politician.class
+ch\hevs\politicsservice\Politics.class
+ch\hevs\exception\BankException.class
+ch\hevs\politicsservice\PoliticsBean.class
+ch\hevs\businessobject\Party.class
+ch\hevs\managedbeans\TransferBean.class
+ch\hevs\businessobject\Address.class
+ch\hevs\businessobject\Person.class
+ch\hevs\businessobject\Position.class
+ch\hevs\businessobject\CivilServant.class
