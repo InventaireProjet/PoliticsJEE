@@ -1,6 +1,5 @@
 ch\hevs\businessobject\Politician.class
 ch\hevs\politicsservice\Politics.class
-ch\hevs\exception\BankException.class
 ch\hevs\politicsservice\PoliticsBean.class
 ch\hevs\businessobject\Party.class
 ch\hevs\managedbeans\TransferBean.class

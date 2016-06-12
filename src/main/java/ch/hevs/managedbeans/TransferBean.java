@@ -237,7 +237,7 @@ public class TransferBean
 		this.politicianName = (String)event.getNewValue();
 
 		Party party = politics.getPartyFromPoliticianLastname(this.politicianName);
-		
+
 		sourcePartyInitials=party.getPartyInitials();
 
 		List<Position> positions = politics.getPositionFromPoliticianLastname(politicianName);
@@ -260,7 +260,7 @@ public class TransferBean
 
 
 	public String performPartyChange() {
-		
+
 		try {
 			if (sourcePartyInitials.equals(destinationPartyInitials))  {
 
@@ -273,6 +273,8 @@ public class TransferBean
 
 				// Transfer
 				politics.changeParty (politician, partyDest);
+				//For updating the initials later
+				sourcePartyInitials=destinationPartyInitials;
 				this.transactionResult="Success!";
 			}
 		} catch (Exception e) {
@@ -285,48 +287,52 @@ public class TransferBean
 	public String performPostionAddingPolitician() {
 
 		try {
-			for(String position:politicianSourcePositionNames)
+			for(String position:politicianSourcePositionNames){
 				if (position.equals(politicianDestinationPositionName))  {
 
 					this.transactionResult="Error: position already exists!";
+					return "showTransferResult";
 				} 
-				else {
 
-					Politician politician = politics.getPoliticianFromLastname(politicianName);
-					Position newPosition = politics.getPositionFromName(politicianDestinationPositionName);
-
-					// Transfer
-					politics.addPosition (politician, newPosition);
-					this.transactionResult="Success!";
-				}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		Politician politician = politics.getPoliticianFromLastname(politicianName);
+		Position newPosition = politics.getPositionFromName(politicianDestinationPositionName);
 
-		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+		// Transfer
+		politics.addPosition (politician, newPosition);
+		politicianSourcePositionNames.add(politicianDestinationPositionName);
+		this.transactionResult="Success!";
+
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
 
-	public String performPostionAddingCivilServant() {
+	return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+}
 
-		try {
-			for(String position:civilServantSourcePositionNames)
-				if (position.equals(civilServantDestinationPositionName))  {
+public String performPostionAddingCivilServant() {
 
-					this.transactionResult="Error: position already exists!";
-				} 
-				else {
+	try {
+		for(String position:civilServantSourcePositionNames){
+			if (position.equals(civilServantDestinationPositionName))  {
 
-					CivilServant civilServant = politics.getCivilServantFromLastname(civilServantName);
-					Position newPosition = politics.getPositionFromName(civilServantDestinationPositionName);
-
-					// Transfer
-					politics.addPosition (civilServant, newPosition);
-					this.transactionResult="Success!";
-				}
-		} catch (Exception e) {
-			e.printStackTrace();
+				this.transactionResult="Error: position already exists!";
+				return "showTransferResult";
+			} 
 		}
 
-		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+				CivilServant civilServant = politics.getCivilServantFromLastname(civilServantName);
+				Position newPosition = politics.getPositionFromName(civilServantDestinationPositionName);
+
+				// Transfer
+				politics.addPosition (civilServant, newPosition);
+				civilServantSourcePositionNames.add(civilServantDestinationPositionName);
+				this.transactionResult="Success!";
+			
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+
+	return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+}
 }
