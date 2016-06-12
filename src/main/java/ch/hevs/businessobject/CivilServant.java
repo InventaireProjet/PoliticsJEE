@@ -34,6 +34,7 @@ public class CivilServant extends Person {
 		this.positions=new HashSet<Position>();
 	}
 	
+	@Override
 	public void addPosition(Position pos) {
 		this.positions.add(pos);
 		pos.addCivilServant(this);

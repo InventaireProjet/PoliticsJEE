@@ -48,6 +48,7 @@ public class Politician extends Person {
 
 	}
 	
+	@Override
 	public void addPosition(Position pos) {
 		this.positions.add(pos);
 		pos.addPolitician(this);

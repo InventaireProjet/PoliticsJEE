@@ -15,6 +15,7 @@ import ch.hevs.businessobject.Position;
 
 @Stateless
 public class PoliticsBean implements Politics {
+	
 	@PersistenceContext(name = "PoliticsPU")
 	private EntityManager em;
 
@@ -75,8 +76,10 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public void addPosition(Person person, Position position) {
-		person.addPosition(position);
 		person = em.merge(person);
+		position = em.merge(position);
+		person.addPosition(position);
+		em.flush();
 	}
 
 	@Override

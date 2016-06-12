@@ -26,5 +26,4 @@ public interface Politics {
 	public void changeParty(Politician politician, Party newParty);
 	public void addPosition(Person person, Position position);
 	
-	
 }
