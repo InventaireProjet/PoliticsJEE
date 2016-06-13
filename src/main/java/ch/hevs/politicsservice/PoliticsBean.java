@@ -3,8 +3,11 @@ package ch.hevs.politicsservice;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
 import ch.hevs.businessobject.CivilServant;
@@ -14,9 +17,10 @@ import ch.hevs.businessobject.Politician;
 import ch.hevs.businessobject.Position;
 
 @Stateless
+@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
 public class PoliticsBean implements Politics {
 	
-	@PersistenceContext(name = "PoliticsPU")
+	@PersistenceContext(name = "PoliticsPU", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 
 	@Override
@@ -79,7 +83,6 @@ public class PoliticsBean implements Politics {
 		person = em.merge(person);
 		position = em.merge(position);
 		person.addPosition(position);
-		em.flush();
 	}
 
 	@Override
