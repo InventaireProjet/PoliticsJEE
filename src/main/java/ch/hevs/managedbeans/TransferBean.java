@@ -33,9 +33,7 @@ public class TransferBean
 	private List<String> destinationPositionNames; 
 	private String sourcePartyInitials;
 	private String destinationPartyInitials;
-	//private String politicianSourcePositionName;
 	private String politicianDestinationPositionName;
-	//	private String civilServantSourcePositionName;
 	private String civilServantDestinationPositionName;
 	private String politicianName;
 	private String civilServantName;
@@ -44,6 +42,8 @@ public class TransferBean
 
 	@PostConstruct
 	public void initialize() throws NamingException {
+
+
 
 		// use JNDI to inject reference to EJB
 		InitialContext ctx = new InitialContext();
@@ -98,6 +98,7 @@ public class TransferBean
 		for (Position position : positionList) {
 			this.destinationPositionNames.add(position.getPositionName());
 		}
+
 	}
 
 
@@ -163,15 +164,6 @@ public class TransferBean
 		this.destinationPartyInitials = destinationPartyInitials;
 	}
 
-	/*	//	PoliticianSourcePositionName
-	public String getPoliticianSourcePositionName() {
-		return politicianSourcePositionName;
-	}
-
-	public void setPoliticianSourcePositionName(String politicianSourcePositionName) {
-		this.politicianSourcePositionName = politicianSourcePositionName;
-	}
-	 **/
 
 	//	PoliticianDestinationPositionName
 	public String getPoliticianDestinationPositionName() {
@@ -182,17 +174,7 @@ public class TransferBean
 		this.politicianDestinationPositionName = politicianDestinationPositionName;
 	}
 
-	/*
-	//	CivilServantSourcePositionName
-	public String getCivilServantSourcePositionName() {
-		return civilServantSourcePositionName;
-	}
 
-	public void setCivilServantSourcePositionName(String civilServantSourcePositionName) {
-		this.civilServantSourcePositionName = civilServantSourcePositionName;
-	}
-
-	 */
 	//	CivilServantDestinationPositionName
 	public String getCivilServantDestinationPositionName() {
 		return civilServantDestinationPositionName;
@@ -232,6 +214,20 @@ public class TransferBean
 		this.transactionResult = transactionResult;
 	}
 
+
+	public void update() {
+
+
+		Party party = politics.getPartyFromPoliticianLastname(this.politicianName);
+
+		sourcePartyInitials=party.getPartyInitials();
+
+		List<Position> positions = politics.getPositionFromPoliticianLastname(this.politicianName);
+		this.politicianSourcePositionNames = new ArrayList<String>();
+		for (Position position : positions) {
+			this.politicianSourcePositionNames.add(position.getPositionName());
+		}
+	}
 
 	public void updatePartyAndPosition(ValueChangeEvent event) {
 		this.politicianName = (String)event.getNewValue();
@@ -273,7 +269,7 @@ public class TransferBean
 
 				// Transfer
 				politics.changeParty (politician, partyDest);
-				//For updating the initials later
+				//For updating the initials source
 				sourcePartyInitials=destinationPartyInitials;
 				this.transactionResult="Success!";
 			}
@@ -294,45 +290,47 @@ public class TransferBean
 					return "showTransferResult";
 				} 
 
-		}
-		Politician politician = politics.getPoliticianFromLastname(politicianName);
-		Position newPosition = politics.getPositionFromName(politicianDestinationPositionName);
+			}
+			Politician politician = politics.getPoliticianFromLastname(politicianName);
+			Position newPosition = politics.getPositionFromName(politicianDestinationPositionName);
 
-		// Transfer
-		politics.addPosition (politician, newPosition);
-		politicianSourcePositionNames.add(politicianDestinationPositionName);
-		this.transactionResult="Success!";
+			// Transfer
+			politics.addPosition (politician, newPosition);
+			//For updating the position source
+			politicianSourcePositionNames.add(politicianDestinationPositionName);
+			this.transactionResult="Success!";
 
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-
-	return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
-}
-
-public String performPostionAddingCivilServant() {
-
-	try {
-		for(String position:civilServantSourcePositionNames){
-			if (position.equals(civilServantDestinationPositionName))  {
-
-				this.transactionResult="Error: position already exists!";
-				return "showTransferResult";
-			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-				CivilServant civilServant = politics.getCivilServantFromLastname(civilServantName);
-				Position newPosition = politics.getPositionFromName(civilServantDestinationPositionName);
-
-				// Transfer
-				politics.addPosition (civilServant, newPosition);
-				civilServantSourcePositionNames.add(civilServantDestinationPositionName);
-				this.transactionResult="Success!";
-			
-	} catch (Exception e) {
-		e.printStackTrace();
+		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
 	}
 
-	return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
-}
+	public String performPostionAddingCivilServant() {
+
+		try {
+			for(String position:civilServantSourcePositionNames){
+				if (position.equals(civilServantDestinationPositionName))  {
+
+					this.transactionResult="Error: position already exists!";
+					return "showTransferResult";
+				} 
+			}
+
+			CivilServant civilServant = politics.getCivilServantFromLastname(civilServantName);
+			Position newPosition = politics.getPositionFromName(civilServantDestinationPositionName);
+
+			// Transfer
+			politics.addPosition (civilServant, newPosition);
+			//For updating the position source
+			civilServantSourcePositionNames.add(civilServantDestinationPositionName);
+			this.transactionResult="Success!";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
+	}
 }
