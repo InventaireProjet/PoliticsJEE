@@ -80,7 +80,9 @@ public class TransferBean
 		if (positionsPoliticians.size()==0) {
 		}
 		else {
-			this.politicianSourcePositionNames.add(positionsPoliticians.get(0).getPositionName());
+			for (Position position : positionsPoliticians) {
+				this.politicianSourcePositionNames.add(position.getPositionName());
+			}
 		}
 
 		// initialize position name of civil servants
@@ -90,8 +92,11 @@ public class TransferBean
 
 		}
 		else {
-			this.civilServantSourcePositionNames.add(positionsCivilServants.get(0).getPositionName());
+			for (Position position : positionsCivilServants) {
+				this.civilServantSourcePositionNames.add(position.getPositionName());
+			}
 		}
+		
 		//initialize destination position names
 		this.destinationPositionNames = new ArrayList<String>();
 		List<Position> positionList = politics.getPositions();
@@ -215,20 +220,6 @@ public class TransferBean
 	}
 
 
-	public void update() {
-
-
-		Party party = politics.getPartyFromPoliticianLastname(this.politicianName);
-
-		sourcePartyInitials=party.getPartyInitials();
-
-		List<Position> positions = politics.getPositionFromPoliticianLastname(this.politicianName);
-		this.politicianSourcePositionNames = new ArrayList<String>();
-		for (Position position : positions) {
-			this.politicianSourcePositionNames.add(position.getPositionName());
-		}
-	}
-
 	public void updatePartyAndPosition(ValueChangeEvent event) {
 		this.politicianName = (String)event.getNewValue();
 
@@ -324,7 +315,7 @@ public class TransferBean
 			// Transfer
 			politics.addPosition (civilServant, newPosition);
 			//For updating the position source
-			civilServantSourcePositionNames.add(civilServantDestinationPositionName);
+			//civilServantSourcePositionNames.add(civilServantDestinationPositionName);
 			this.transactionResult="Success!";
 
 		} catch (Exception e) {

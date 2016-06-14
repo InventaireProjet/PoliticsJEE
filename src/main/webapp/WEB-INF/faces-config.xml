@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
-    version="2.2">
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
 	<managed-bean>
 		<managed-bean-name>transferBean</managed-bean-name>
 		<managed-bean-class>ch.hevs.managedbeans.TransferBean</managed-bean-class>
@@ -22,6 +21,14 @@
 		<from-view-id>/transferForm.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>#{transferBean.performPartyChange}</from-outcome>
+			<to-view-id>/showTransferResult.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>#{transferBean.performPostionAddingCivilServant}</from-outcome>
+			<to-view-id>/showTransferResult.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>#{transferBean.performPostionAddingPolitician}</from-outcome>
 			<to-view-id>/showTransferResult.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>

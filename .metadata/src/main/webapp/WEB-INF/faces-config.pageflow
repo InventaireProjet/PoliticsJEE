@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/PoliticsJEE/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="transferForm.xhtml" x="338" y="178" id="pf14655758314820" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14655758314821" inlinks="pf14655758314822" path="/transferForm.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="showTransferResult.xhtml" x="672" y="168" id="pf14655758314823" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14655758314821" path="/showTransferResult.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="transferForm.xhtml" x="312" y="168" id="pf14655758314820" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14655758314821 pf14659392729230 pf14659417655562" inlinks="pf14655758314822" path="/transferForm.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="showTransferResult.xhtml" x="936" y="240" id="pf14655758314823" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf14655758314821 pf14659392729230 pf14659417655562" path="/showTransferResult.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="welcomePolitics.xhtml" x="108" y="168" id="pf14655758314834" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14655758314822" path="/welcomePolitics.xhtml"/>
   <links id="pf14655758314822" target="pf14655758314820" source="pf14655758314834" outcome="transferForm"/>
   <links id="pf14655758314821" target="pf14655758314823" source="pf14655758314820" outcome="#{transferBean.performPartyChange}"/>
+  <links id="pf14659392729230" target="pf14655758314823" source="pf14655758314820" outcome="#{transferBean.performPostionAddingCivilServant}"/>
+  <links id="pf14659417655562" target="pf14655758314823" source="pf14655758314820" outcome="#{transferBean.performPostionAddingPolitician}"/>
 </pageflow:Pageflow>

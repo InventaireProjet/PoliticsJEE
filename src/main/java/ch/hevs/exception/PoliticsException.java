@@ -2,6 +2,11 @@ package ch.hevs.exception;
 
 public class PoliticsException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PoliticsException() {
 		super();
 	}

@@ -1,7 +1,5 @@
 package ch.hevs.businessobject;
 
-import java.util.Set;
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
