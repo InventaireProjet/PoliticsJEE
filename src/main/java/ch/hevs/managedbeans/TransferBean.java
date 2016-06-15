@@ -96,7 +96,7 @@ public class TransferBean
 				this.civilServantSourcePositionNames.add(position.getPositionName());
 			}
 		}
-		
+
 		//initialize destination position names
 		this.destinationPositionNames = new ArrayList<String>();
 		List<Position> positionList = politics.getPositions();
@@ -140,9 +140,32 @@ public class TransferBean
 		return politicianSourcePositionNames;
 	}
 
+	//	politicianSourcePositionNames returns a string without brackets
+	public String getPoliticianSourcePositionNamesString() {
+
+		if (politicianSourcePositionNames!=null) {
+			return politicianSourcePositionNames.toString().replace("[", "").replace("]", "");
+
+		}
+
+		return null;
+	}
+
+
 	//	civilServantSourcePositionNames
 	public List<String> getCivilServantSourcePositionNames() {
 		return civilServantSourcePositionNames;
+	}
+
+	//	civilServantSourcePositionNames returns a string without brackets
+	public String getCivilServantSourcePositionNamesString() {
+
+		if (civilServantSourcePositionNames!=null) {
+			return civilServantSourcePositionNames.toString().replace("[", "").replace("]", "");
+
+		}
+
+		return null;
 	}
 
 	// DestinationPositionNames
@@ -260,9 +283,11 @@ public class TransferBean
 
 				// Transfer
 				politics.changeParty (politician, partyDest);
+								
+				this.transactionResult="Party changed from " +sourcePartyInitials+" to " +destinationPartyInitials +" for politician " +politicianName +".";
+				
 				//For updating the initials source
 				sourcePartyInitials=destinationPartyInitials;
-				this.transactionResult="Success!";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,7 +296,7 @@ public class TransferBean
 		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
 	} 
 
-	public String performPostionAddingPolitician() {
+	public String performPositionAddingPolitician() {
 
 		try {
 			for(String position:politicianSourcePositionNames){
@@ -289,7 +314,7 @@ public class TransferBean
 			politics.addPosition (politician, newPosition);
 			//For updating the position source
 			politicianSourcePositionNames.add(politicianDestinationPositionName);
-			this.transactionResult="Success!";
+			this.transactionResult="Position " +politicianDestinationPositionName +" added to politician " +politicianName +".";
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -298,7 +323,7 @@ public class TransferBean
 		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
 	}
 
-	public String performPostionAddingCivilServant() {
+	public String performPositionAddingCivilServant() {
 
 		try {
 			for(String position:civilServantSourcePositionNames){
@@ -315,8 +340,8 @@ public class TransferBean
 			// Transfer
 			politics.addPosition (civilServant, newPosition);
 			//For updating the position source
-			//civilServantSourcePositionNames.add(civilServantDestinationPositionName);
-			this.transactionResult="Success!";
+			civilServantSourcePositionNames.add(civilServantDestinationPositionName);
+			this.transactionResult="Position " +civilServantDestinationPositionName +" added to civil servant " +civilServantName +".";
 
 		} catch (Exception e) {
 			e.printStackTrace();

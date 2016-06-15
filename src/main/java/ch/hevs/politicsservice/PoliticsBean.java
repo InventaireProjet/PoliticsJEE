@@ -42,7 +42,7 @@ public class PoliticsBean implements Politics {
 	public Party getPartyFromPoliticianLastname(String politicianLastname) {
 		Query query = em.createQuery("SELECT party FROM Party party, IN(party.members) m where m.lastname = :lastname");
 		query.setParameter("lastname", politicianLastname);
-		
+	
 		return (Party) query.getSingleResult();
 	}
 
