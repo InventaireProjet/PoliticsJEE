@@ -2,6 +2,9 @@ package ch.hevs.politicsservice;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -17,11 +20,15 @@ import ch.hevs.businessobject.Politician;
 import ch.hevs.businessobject.Position;
 
 @Stateless
+@RolesAllowed(value={"Visitor", "Administrator"})
 @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
 public class PoliticsBean implements Politics {
 	
 	@PersistenceContext(name = "PoliticsPU", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	@Resource
+	private SessionContext ctx;
 
 	@Override
 	public List<Politician> getPoliticians() {
@@ -74,6 +81,7 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public void changeParty(Politician politician, Party newParty) {
+		
 		politician.setParty(newParty);
 		politician = em.merge(politician);
 	}
@@ -106,4 +114,12 @@ public class PoliticsBean implements Politics {
 		return (CivilServant) query.getSingleResult();
 	}
 
+	//method used to allow a transaction considering the user's role 
+		public boolean checkRole() {
+			boolean notAllowed= false;
+			if ( !ctx.isCallerInRole("Administrator")) { // verify that the caller has the correct role 
+				notAllowed=true;				
+			}
+			return notAllowed;
+		}
 }

@@ -29,7 +29,7 @@
 				</h:selectOneMenu>
 
 				<h:commandButton value="Change party"
-					action="#{transferBean.performPartyChange}"></h:commandButton>
+					action="#{transferBean.performPartyChange}" disabled="#{transferBean.checkRole}"></h:commandButton>
 
 				<h:outputText value="Positions: "></h:outputText>
 				<h:outputText value="#{transferBean.politicianSourcePositionNamesString}"></h:outputText>
@@ -40,7 +40,7 @@
 				</h:selectOneMenu>
 
 				<h:commandButton value="Add position"
-					action="#{transferBean.performPositionAddingPolitician}"></h:commandButton>
+					action="#{transferBean.performPositionAddingPolitician}" disabled="#{transferBean.checkRole}"></h:commandButton>
 			</h:panelGrid>
 			<p></p>
 			<h:outputText style="font-size:18px;" value="Civil Servants: "></h:outputText>
@@ -64,7 +64,7 @@
 				</h:selectOneMenu>
 
 				<h:commandButton value="Add position"
-					action="#{transferBean.performPositionAddingCivilServant}"></h:commandButton>
+					action="#{transferBean.performPositionAddingCivilServant}" disabled="#{transferBean.checkRole}"></h:commandButton>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

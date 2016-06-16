@@ -39,6 +39,7 @@ public class TransferBean
 	private String civilServantName;
 	private String transactionResult;
 	private Politics politics;
+	private boolean checkRole;
 
 	@PostConstruct
 	public void initialize() throws NamingException {
@@ -49,6 +50,9 @@ public class TransferBean
 		InitialContext ctx = new InitialContext();
 		politics = (Politics) ctx.lookup("java:global/Politics-0.0.1-SNAPSHOT/PoliticsBean!ch.hevs.politicsservice.Politics");    	
 
+		//get the role of the user
+		this.checkRole = politics.checkRole();
+		
 		// get politicians
 		List<Politician> politicianList = politics.getPoliticians();
 		this.politicianNames = new ArrayList<String>();
@@ -240,6 +244,15 @@ public class TransferBean
 	}
 	public void setTransactionResult(String transactionResult) {
 		this.transactionResult = transactionResult;
+	}
+	
+	// checkRole
+	public boolean getCheckRole() {
+		return checkRole;
+	}
+
+	public void setCheckRole(boolean checkRole) {
+		this.checkRole = checkRole;
 	}
 
 

@@ -25,5 +25,6 @@ public interface Politics {
 	public Position getPositionFromName(String positionName);
 	public void changeParty(Politician politician, Party newParty);
 	public void addPosition(Person person, Position position);
+	public boolean checkRole();
 	
 }
