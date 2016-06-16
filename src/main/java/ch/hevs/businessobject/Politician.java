@@ -15,7 +15,7 @@ public class Politician extends Person {
 
 	@ManyToOne
 	private Party party;
-	
+
 	@ManyToMany(mappedBy = "politicians", fetch=FetchType.EAGER)
 	private Set<Position> positions;
 
@@ -27,14 +27,14 @@ public class Politician extends Person {
 	public void setParty(Party party) {
 		this.party = party;
 	}
-	
+
 	public Set<Position> getPositions() {
 		return positions;
 	}
 	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
-	
+
 
 
 	// constructors
@@ -43,11 +43,11 @@ public class Politician extends Person {
 	}
 	public Politician(String lastname, String firstname) {
 		super(lastname, firstname);
-		
+
 		this.positions=new HashSet<Position>();
 
 	}
-	
+
 	@Override
 	public void addPosition(Position pos) {
 		this.positions.add(pos);

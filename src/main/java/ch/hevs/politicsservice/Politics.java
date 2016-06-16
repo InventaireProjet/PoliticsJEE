@@ -11,7 +11,7 @@ import ch.hevs.businessobject.Politician;
 import ch.hevs.businessobject.Position;
 @Local
 public interface Politics {
-	
+
 	public List<Politician> getPoliticians();
 	public Politician getPoliticianFromLastname(String politicianLastname);
 	public List<Party> getParties();
@@ -26,5 +26,5 @@ public interface Politics {
 	public void changeParty(Politician politician, Party newParty);
 	public void addPosition(Person person, Position position);
 	public boolean checkRole();
-	
+
 }

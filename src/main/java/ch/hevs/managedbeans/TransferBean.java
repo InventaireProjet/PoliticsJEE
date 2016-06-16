@@ -52,7 +52,7 @@ public class TransferBean
 
 		//get the role of the user
 		this.checkRole = politics.checkRole();
-		
+
 		// get politicians
 		List<Politician> politicianList = politics.getPoliticians();
 		this.politicianNames = new ArrayList<String>();
@@ -245,7 +245,7 @@ public class TransferBean
 	public void setTransactionResult(String transactionResult) {
 		this.transactionResult = transactionResult;
 	}
-	
+
 	// checkRole
 	public boolean getCheckRole() {
 		return checkRole;
@@ -296,9 +296,9 @@ public class TransferBean
 
 				// Transfer
 				politics.changeParty (politician, partyDest);
-								
+
 				this.transactionResult="Party changed from " +sourcePartyInitials+" to " +destinationPartyInitials +" for politician " +politicianName +".";
-				
+
 				//For updating the initials source
 				sourcePartyInitials=destinationPartyInitials;
 			}

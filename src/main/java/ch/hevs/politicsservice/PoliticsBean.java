@@ -23,10 +23,10 @@ import ch.hevs.businessobject.Position;
 @RolesAllowed(value={"Visitor", "Administrator"})
 @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
 public class PoliticsBean implements Politics {
-	
+
 	@PersistenceContext(name = "PoliticsPU", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
-	
+
 	@Resource
 	private SessionContext ctx;
 
@@ -49,7 +49,7 @@ public class PoliticsBean implements Politics {
 	public Party getPartyFromPoliticianLastname(String politicianLastname) {
 		Query query = em.createQuery("SELECT party FROM Party party, IN(party.members) m where m.lastname = :lastname");
 		query.setParameter("lastname", politicianLastname);
-	
+
 		return (Party) query.getSingleResult();
 	}
 
@@ -81,7 +81,7 @@ public class PoliticsBean implements Politics {
 
 	@Override
 	public void changeParty(Politician politician, Party newParty) {
-		
+
 		politician.setParty(newParty);
 		politician = em.merge(politician);
 	}
@@ -115,11 +115,11 @@ public class PoliticsBean implements Politics {
 	}
 
 	//method used to allow a transaction considering the user's role 
-		public boolean checkRole() {
-			boolean notAllowed= false;
-			if ( !ctx.isCallerInRole("Administrator")) { // verify that the caller has the correct role 
-				notAllowed=true;				
-			}
-			return notAllowed;
+	public boolean checkRole() {
+		boolean notAllowed= false;
+		if ( !ctx.isCallerInRole("Administrator")) { // verify that the caller has the correct role 
+			notAllowed=true;				
 		}
+		return notAllowed;
+	}
 }

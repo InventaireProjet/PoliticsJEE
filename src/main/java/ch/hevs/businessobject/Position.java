@@ -29,7 +29,7 @@ public class Position {
 
 	@ManyToMany (fetch=FetchType.EAGER)
 	private Set<Politician> politicians;
-	
+
 	@ManyToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<CivilServant> appointees;
 
@@ -77,7 +77,7 @@ public class Position {
 
 	//Constructors
 
-	
+
 
 	public Position() {
 	}
@@ -89,7 +89,7 @@ public class Position {
 		this.appointees = new HashSet<CivilServant>();
 		this.politicians = new HashSet<Politician>();
 	}
-	
+
 	/**
 	 * NEVER USE THIS METHOD IN CODE
 	 * @param politician
@@ -97,7 +97,7 @@ public class Position {
 	public void addPolitician(Politician politician) {
 		this.politicians.add(politician);
 	}
-	
+
 	/**
 	 * NEVER USE THIS METHOD IN CODE
 	 * @param civilServant

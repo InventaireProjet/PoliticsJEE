@@ -11,7 +11,7 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -19,7 +19,7 @@ public class Person {
 	private String firstname;
 	@Embedded
 	private Address address;
-	
+
 
 	//Getters and setters
 	public Long getId() {
@@ -42,7 +42,7 @@ public class Person {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	
+
 	public Address getAddress() {
 		return address;
 	}
@@ -53,11 +53,11 @@ public class Person {
 	// constructors
 	public Person() {
 	}
-	
+
 	public Person(String lastname, String firstname) {
 		this.lastname = lastname;
 		this.firstname = firstname;
 	}
-	
+
 	public void addPosition(Position pos) {	};
 }
